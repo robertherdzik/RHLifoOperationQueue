@@ -15,7 +15,7 @@ class RHLifoOperationQueue {
      - parameter waitUntilFinished: If true, the current thread is blocked until all of the specified operations finish executing. If false, the operations are added to the queue and control returns immediately to the caller.
      */
     func addOperations(operations: [NSOperation], waitUntilFinished: Bool = false) {
-        // Add dependency according to last enqueued operation
+        // Add new dependency to last already enqueued operation
         if let firstOperationInNewSet = operations.first {
             operationQueue.operations.last?.addDependency(firstOperationInNewSet)
         }
