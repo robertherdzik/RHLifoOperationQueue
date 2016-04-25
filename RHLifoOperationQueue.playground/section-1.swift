@@ -1,6 +1,6 @@
 import Foundation
 
-class RHLifoOperations {
+class RHLifoOperationQueue {
     
     let operationQueue = NSOperationQueue()
     
@@ -37,7 +37,7 @@ class RHLifoOperations {
 
 
                                                     // Example usage //
-let lifoQueue = RHLifoOperations()
+let lifoQueue = RHLifoOperationQueue()
 
 let blockOperation1 = NSBlockOperation {
     print("🐠 blockOperation1")
