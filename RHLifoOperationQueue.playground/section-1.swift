@@ -1,23 +1,17 @@
 import Foundation
 
-class RHLifoOperationQueue {
-    
-    let operationQueue = NSOperationQueue()
-    
-    init() {
-        operationQueue.maxConcurrentOperationCount = 1
-    }
+class RHLifoOperationQueue: NSOperationQueue {
     
     /**
-     Method scheduled operations in LIFO order (Last In First Out)
+     Method override default implementation of 'addOperations' and scheduled operations in LIFO order (Last In First Out)
      
      - parameter operations: The array of NSOperation objects that you want to add to the receiver.
      - parameter waitUntilFinished: If true, the current thread is blocked until all of the specified operations finish executing. If false, the operations are added to the queue and control returns immediately to the caller.
      */
-    func addOperations(operations: [NSOperation], waitUntilFinished: Bool = false) {
-        // Add new dependency to last already enqueued operation
-        if let firstOperationInNewSet = operations.first {
-            operationQueue.operations.last?.addDependency(firstOperationInNewSet)
+    override func addOperations(operations: [NSOperation], waitUntilFinished: Bool = false) {
+        // Add new dependency according to already enqueued operation
+        if let lastOperationInNewSet = operations.last, firstOperationInQueue = self.operations.first {
+            lastOperationInNewSet.addDependency(firstOperationInQueue)
         }
         
         for indx in 0  ..< operations.count  {
@@ -30,7 +24,7 @@ class RHLifoOperationQueue {
             }
         }
         
-        operationQueue.addOperations(operations, waitUntilFinished: waitUntilFinished)
+        super.addOperations(operations, waitUntilFinished: waitUntilFinished)
     }
 }
 
